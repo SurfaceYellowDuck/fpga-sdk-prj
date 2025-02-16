@@ -35,12 +35,12 @@ set_option -place_option 0
 set_option -route_option 0
 set_option -clock_route_order 0
 set_option -route_maxfan 23
-set_option -use_jtag_as_gpio 1
+set_option -use_jtag_as_gpio 0
 set_option -use_sspi_as_gpio 1
 set_option -use_mspi_as_gpio 1
 set_option -use_ready_as_gpio 1
 set_option -use_done_as_gpio 1
-set_option -use_reconfign_as_gpio 1
+set_option -use_reconfign_as_gpio 0
 set_option -use_mode_as_gpio 0
 set_option -use_i2c_as_gpio 0
 set_option -use_cpu_as_gpio 0
