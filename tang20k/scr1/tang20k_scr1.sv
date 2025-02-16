@@ -31,6 +31,14 @@ module tang20k_scr1
     input  logic                        BTN2,
     input  logic                        BTN3,
     input  logic                        BTN4,
+
+    `ifdef SCR1_DBG_EN
+    // input  logic                        JTAG_SRST_N,
+    input  logic                        JTAG_TCK,
+    input  logic                        JTAG_TMS,
+    input  logic                        JTAG_TDI,
+    output logic                        JTAG_TDO,
+    `endif
     input  logic                        UART_RX,
     output logic                        UART_TX
 );
@@ -91,6 +99,16 @@ module tang20k_scr1
     logic [SCR1_AHB_WIDTH-1:0]          hrdata_0;
     logic [SCR1_AHB_WIDTH-1:0]          hrdata_1;
     
+
+    `ifdef SCR1_DBG_EN
+    //logic                               jtag_srst_n;
+    logic                               jtag_trst_n;
+    logic                               jtag_tck;
+    logic                               jtag_tms;
+    logic                               jtag_tdi;
+    logic                               jtag_tdo;
+    logic                               jtag_tdo_en;
+    `endif // SCR1_DBG_EN
     
     // --- UART ---------------------------------------------
     logic                               uart_rts_n; // <- UART
@@ -245,7 +263,16 @@ module tang20k_scr1
     .dmem_hwdata                (ahb_dmem_hwdata),
     .dmem_hready                (ahb_dmem_hready),
     .dmem_hrdata                (ahb_dmem_hrdata),
-    .dmem_hresp                 (ahb_dmem_hresp)
+    .dmem_hresp                 (ahb_dmem_hresp),
+
+    `ifdef SCR1_DBG_EN
+    .trst_n                     (1'b1),
+    .tck                        (jtag_tck),
+    .tms                        (jtag_tms),
+    .tdi                        (jtag_tdi),
+    .tdo                        (jtag_tdo),
+    .tdo_en                     (jtag_tdo_en)
+    `endif
     );
     
     `ifdef SCR1_IPIC_EN
@@ -254,6 +281,13 @@ module tang20k_scr1
     assign scr1_irq = uart_irq;
     `endif // SCR1_IPIC_EN
     
+    `ifdef SCR1_DBG_EN
+    assign JTAG_TCK = jtag_tck;
+    assign JTAG_TMS = jtag_tms;
+    assign JTAG_TDI = jtag_tdi;
+    assign JTAG_TDO = (jtag_tdo_en) ? jtag_tdo : 1'bZ;;
+  
+    `endif
 
     
     
