@@ -282,11 +282,11 @@ module tang20k_scr1
     `endif // SCR1_IPIC_EN
     
     `ifdef SCR1_DBG_EN
-    assign JTAG_TCK = jtag_tck;
-    assign JTAG_TMS = jtag_tms;
-    assign JTAG_TDI = jtag_tdi;
-    assign JTAG_TDO = (jtag_tdo_en) ? jtag_tdo : 1'bZ;;
-  
+    assign jtag_tck = JTAG_TCK;
+    assign jtag_tms = JTAG_TMS;
+    assign jtag_tdi = JTAG_TDI;
+    assign JTAG_TDO = (jtag_tdo_en) ? jtag_tdo : 1'bZ;
+    assign LED5 = 1'b0;
     `endif
 
     
