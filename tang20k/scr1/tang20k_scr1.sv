@@ -33,7 +33,7 @@ module tang20k_scr1
     input  logic                        BTN4,
 
     `ifdef SCR1_DBG_EN
-    // input  logic                        JTAG_SRST_N,
+    input  logic                        JTAG_TRST_N,
     input  logic                        JTAG_TCK,
     input  logic                        JTAG_TMS,
     input  logic                        JTAG_TDI,
@@ -266,7 +266,7 @@ module tang20k_scr1
     .dmem_hresp                 (ahb_dmem_hresp),
 
     `ifdef SCR1_DBG_EN
-    .trst_n                     (1'b1),
+    .trst_n                     (jtag_trst_n),
     .tck                        (jtag_tck),
     .tms                        (jtag_tms),
     .tdi                        (jtag_tdi),
@@ -282,6 +282,7 @@ module tang20k_scr1
     `endif // SCR1_IPIC_EN
     
     `ifdef SCR1_DBG_EN
+    assign jtag_trst_n = JTAG_TRST_N;
     assign jtag_tck = JTAG_TCK;
     assign jtag_tms = JTAG_TMS;
     assign jtag_tdi = JTAG_TDI;
