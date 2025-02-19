@@ -128,7 +128,7 @@ module tang20k_scr1
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     assign extn_rst_in_n = RESETn;
     assign cpu_clk       = CLK;
-    assign pwrup_rst_n   = 1'b1;
+    assign pwrup_rst_n   = RESETn;
     
     always_ff @(posedge cpu_clk, negedge pwrup_rst_n)
     begin
