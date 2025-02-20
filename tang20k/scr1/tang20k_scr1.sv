@@ -26,6 +26,7 @@ module tang20k_scr1
     output logic                        LED3,
     output logic                        LED4,
     output logic                        LED5,
+    output logic                        D_OUT_T12,
     input  logic                        BTN0,
     input  logic                        BTN1,
     input  logic                        BTN2,
@@ -33,6 +34,7 @@ module tang20k_scr1
     input  logic                        BTN4,
 
     `ifdef SCR1_DBG_EN
+    // input  logic                        JTAG_SRST_N,
     input  logic                        JTAG_TRST_N,
     input  logic                        JTAG_TCK,
     input  logic                        JTAG_TMS,
@@ -128,7 +130,7 @@ module tang20k_scr1
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     assign extn_rst_in_n = RESETn;
     assign cpu_clk       = CLK;
-    assign pwrup_rst_n   = '1;
+    assign pwrup_rst_n   = RESETn;
     
     always_ff @(posedge cpu_clk, negedge pwrup_rst_n)
     begin
@@ -286,15 +288,24 @@ module tang20k_scr1
     assign jtag_tck = JTAG_TCK;
     assign jtag_tms = JTAG_TMS;
     assign jtag_tdi = JTAG_TDI;
-    assign JTAG_TDO = (jtag_tdo_en) ? jtag_tdo : 1'bZ;
-    assign LED5 = 1'b0;
+    assign JTAG_TDO = (jtag_tdo_en == 1'b1) ? jtag_tdo : 1'bZ;;
+
+    assign LED2 = jtag_tck;
+  
     `endif
 
+    assign LED0          = ~hard_rst_n;
+    assign LED1          =  heartbeat;
+    assign D_OUT_T12     =  ~heartbeat;
+    assign LED3          =  1'b1;
+    assign LED4          =  1'b0;
+    assign LED5          =  1'b1;
     
     
     assign uart_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
     assign dmem_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_1111_1111;   //rom
     assign imem_hsel = ahb_imem_haddr[31:16] == 16'b1111_1111_1111_1111;
+    
     assign hsel_     = {dmem_hsel, uart_hsel};
     assign hreadyout = {dmem_ready, uart_hready};
     assign hresp     = {dmem_resp, uart_hresp};

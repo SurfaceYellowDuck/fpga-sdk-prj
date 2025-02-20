@@ -8,11 +8,10 @@
         <File path="./tang20k_scr1.sv" type="file.verilog" enable="1"/>
         <File path="./tang20k_scr1.cst" type="file.cst" enable="1"/>
         <File path="./scr1_arch_custom.svh" type="file.other" enable="1"/>
-
+        <File path="tang20k_scr1.sdc" type="file.sdc" enable="1"/>
         
         <File path="./ip/rom_bsram_memory/rom_bsram.sv" type="file.verilog" enable="1"/>
         <File path="./ip/ahb_slave_mux/ahb_slave_mux.sv" type="file.verilog" enable="1"/>
-        
 
         <File path="./ip/ahb_lite_uart16550/src/ahb_lite_uart16550.v" type="file.verilog" enable="1"/>
         <File path="./ip/ahb_lite_uart16550/src/uart16550/raminfr.v" type="file.verilog" enable="1"/>
