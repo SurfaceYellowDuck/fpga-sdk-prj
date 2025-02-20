@@ -128,7 +128,7 @@ module tang20k_scr1
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     assign extn_rst_in_n = RESETn;
     assign cpu_clk       = CLK;
-    assign pwrup_rst_n   = RESETn;
+    assign pwrup_rst_n   = '1;
     
     always_ff @(posedge cpu_clk, negedge pwrup_rst_n)
     begin
@@ -292,10 +292,9 @@ module tang20k_scr1
 
     
     
-    assign uart_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_1101_1111;  //uart
-    assign dmem_hsel = ahb_dmem_haddr[31:17] == 15'b1111_1111_1110_111;   //rom
-    assign imem_hsel = ahb_imem_haddr[31:17] == 15'b1111_1111_1110_111;
-    
+    assign uart_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
+    assign dmem_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_1111_1111;   //rom
+    assign imem_hsel = ahb_imem_haddr[31:16] == 16'b1111_1111_1111_1111;
     assign hsel_     = {dmem_hsel, uart_hsel};
     assign hreadyout = {dmem_ready, uart_hready};
     assign hresp     = {dmem_resp, uart_hresp};

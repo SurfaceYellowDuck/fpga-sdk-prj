@@ -10,7 +10,7 @@
 `define SCR1_PTFM_BLD_ID            32'h22011202
 `define SCR1_PTFM_CORE_CLK_FREQ     32'd27000000
 `define SLAVE_DEVISES_CNT           2
-`define ROM_SIZE                    32768
+`define ROM_SIZE                    16384
 
 //`define SCR1_TRGT_FPGA_XILINX        // Uncomment if target platform is Xilinx FPGAs
 //`define SCR1_TRGT_FPGA_INTEL         // Uncomment if target platform is Intel FPGAs AND --->
@@ -31,8 +31,8 @@
 
 
 
-parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_RST_VECTOR        = 'hFFEE0000;   // Reset vector
-parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_MTVEC_BASE        = 'hFFEE0300;   // MTVEC BASE field reset value
+parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_RST_VECTOR        = 'hFFFF0000;   // Reset vector
+parameter bit [`SCR1_XLEN-1:0]          SCR1_ARCH_MTVEC_BASE        = 'hFFFF0300;   // MTVEC BASE field reset value
 
 parameter bit [`SCR1_DMEM_AWIDTH-1:0]   SCR1_TCM_ADDR_MASK          = 'hFFFFF000;   // TCM mask and size
 parameter bit [`SCR1_DMEM_AWIDTH-1:0]   SCR1_TCM_ADDR_PATTERN       = 'hF0000000;   // TCM address match pattern
