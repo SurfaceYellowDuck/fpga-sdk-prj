@@ -7,6 +7,7 @@ module ahb_slave_mux
                 input        [1:0]                   htrans,
                 input        [31:0]                  rdata_0,
                 input        [31:0]                  rdata_1,
+                input        [31:0]                  rdata_2,
                 input        [SLAVE_DEVISES_CNT-1:0] resp,
                 input        [SLAVE_DEVISES_CNT-1:0] readyout,
                 output logic [31:0]                  hrdata,
@@ -33,6 +34,11 @@ module ahb_slave_mux
                     hready = readyout[1];
                     hrdata = rdata_1;
                     hresp  = resp[1];
+                end
+                else if (local_hsel[2] == 1) begin
+                    hready = readyout[2];
+                    hrdata = rdata_2;
+                    hresp  = resp[2];
                 end
                 else begin
                     hready = 1'b1;

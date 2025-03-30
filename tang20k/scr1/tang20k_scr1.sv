@@ -63,9 +63,9 @@ module tang20k_scr1
     logic                               sys_rst_n;
 
     
-    logic                      dmem_ready;
-    logic                      dmem_resp;
-    logic                      dmem_hsel;
+    logic                               dmem_ready;
+    logic                               dmem_resp;
+    logic                               dmem_hsel;
     `endif // SCR1_DBG_EN
     
     // --- SCR1 ---------------------------------------------
@@ -124,6 +124,9 @@ module tang20k_scr1
     logic [31:0]                        rtc_counter;
     logic                               tick_2Hz;
     logic                               heartbeat;
+
+    logic [31:0]                        core_frq = FPGA_TANG20K_CORE_CLK_FREQ;
+    logic                               ahb_core_frq_sel;
     
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     //  Resets
@@ -288,6 +291,7 @@ module tang20k_scr1
     assign jtag_tck = JTAG_TCK;
     assign jtag_tms = JTAG_TMS;
     assign jtag_tdi = JTAG_TDI;
+
     assign JTAG_TDO = (jtag_tdo_en == 1'b1) ? jtag_tdo : 1'bZ;;
 
     assign LED2 = jtag_tck;
@@ -302,13 +306,14 @@ module tang20k_scr1
     assign LED5          =  1'b1;
     
     
+    assign ahb_core_frq_sel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0000;
     assign uart_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
     assign dmem_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_1111_1111;   //rom
     assign imem_hsel = ahb_imem_haddr[31:16] == 16'b1111_1111_1111_1111;
     
-    assign hsel_     = {dmem_hsel, uart_hsel};
-    assign hreadyout = {dmem_ready, uart_hready};
-    assign hresp     = {dmem_resp, uart_hresp};
+    assign hsel_     = {ahb_core_frq_sel, dmem_hsel, uart_hsel};
+    assign hreadyout = {1'b1, dmem_ready, uart_hready};
+    assign hresp     = {1'b0, dmem_resp, uart_hresp};
     
     
     ahb_lite_uart16550
@@ -373,6 +378,7 @@ module tang20k_scr1
     .hsel_s (hsel_),
     .rdata_0 (hrdata_0),
     .rdata_1 (hrdata_1),
+    .rdata_2 (core_frq),
     .resp (hresp),
     .readyout (hreadyout),
     

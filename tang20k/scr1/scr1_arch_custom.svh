@@ -9,7 +9,7 @@
 `define SCR1_PTFM_SOC_ID            32'h21042600
 `define SCR1_PTFM_BLD_ID            32'h22011202
 `define SCR1_PTFM_CORE_CLK_FREQ     32'd27000000
-`define SLAVE_DEVISES_CNT           2
+`define SLAVE_DEVISES_CNT           3
 `define ROM_SIZE                    16384
 
 //`define SCR1_TRGT_FPGA_XILINX        // Uncomment if target platform is Xilinx FPGAs
