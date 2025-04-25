@@ -27,11 +27,11 @@ module tang20k_scr1
     output logic                        LED4,
     output logic                        LED5,
     output logic                        D_OUT_T12,
-    input  logic                        BTN0,
-    input  logic                        BTN1,
-    input  logic                        BTN2,
-    input  logic                        BTN3,
-    input  logic                        BTN4,
+    // input  logic                        BTN0,
+    // input  logic                        BTN1,
+    // input  logic                        BTN2,
+    // input  logic                        BTN3,
+    // input  logic                        BTN4,
 
     `ifdef SCR1_DBG_EN
     // input  logic                        JTAG_SRST_N,
@@ -42,11 +42,32 @@ module tang20k_scr1
     output logic                        JTAG_TDO,
     `endif
     input  logic                        UART_RX,
-    output logic                        UART_TX
+    output logic                        UART_TX,
+
+    output [13:0]                       ddr_addr,       //ROW_WIDTH=14
+    output [2:0]                        ddr_bank,       //BANK_WIDTH=3
+    output                              ddr_cs,
+    output                              ddr_ras,
+    output                              ddr_cas,
+    output                              ddr_we,
+    output                              ddr_ck,
+    output                              ddr_ck_n,
+    output                              ddr_cke,
+    output                              ddr_odt,
+    output                              ddr_reset_n,
+    output                         ddr_dm,         //DM_WIDTH=2
+    inout   [7:0]                      ddr_dq,         //DQ_WIDTH=16
+    inout                          ddr_dqs,        //DQS_WIDTH=2
+    inout                          ddr_dqs_n      //DQS_WIDTH=2
 );
-    
-    
-    
+
+
+
+logic        rd_data_rdy_ddr;
+logic [31:0] ddr_r_data;
+logic        ddr_command_ready;
+logic        ddr_rst_out;
+
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     //  Signals / Variables declarations
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
@@ -128,10 +149,45 @@ module tang20k_scr1
     logic [31:0]                        core_frq = FPGA_TANG20K_CORE_CLK_FREQ;
     logic                               ahb_core_frq_sel;
     
+    logic                               ddr_hsel;
+    
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     //  Resets
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
-    assign extn_rst_in_n = RESETn;
+    
+// always_comb begin
+//     if()
+// end
+
+ddr3_top ddr3(
+    .clk      (cpu_clk),
+    .rst      (cpu_rst_n),
+    .we       (ahb_dmem_hwrite),
+    .wr_data  (ahb_dmem_hwdata),
+    .addr     ({ahb_dmem_haddr[27:0]}),
+    .ddr_hsel (ddr_hsel),
+
+    .r_data      (ddr_r_data),
+    .ddr_rdy     (rd_data_rdy_ddr),
+    .rst_out     (ddr_rst_out),
+    .ddr_addr    (ddr_addr),
+    .ddr_bank    (ddr_bank),
+    .ddr_cs      (ddr_cs),
+    .ddr_ras     (ddr_ras),
+    .ddr_cas     (ddr_cas),
+    .ddr_we      (ddr_we),
+    .ddr_ck      (ddr_ck),
+    .ddr_ck_n    (ddr_ck_n),
+    .ddr_cke     (ddr_cke),
+    .ddr_odt     (ddr_odt),
+    .ddr_reset_n (ddr_reset_n),
+    .ddr_dqm      (ddr_dm),
+    .ddr_dq      (ddr_dq),
+    .ddr_dqs     (ddr_dqs),
+    .ddr_dqs_n   (ddr_dqs_n)
+);
+
+    assign extn_rst_in_n = RESETn | ~ddr_rst_out;
     assign cpu_clk       = CLK;
     assign pwrup_rst_n   = RESETn;
     
@@ -294,26 +350,26 @@ module tang20k_scr1
 
     assign JTAG_TDO = (jtag_tdo_en == 1'b1) ? jtag_tdo : 1'bZ;;
 
-    assign LED2 = jtag_tck;
+    // assign LED2 = jtag_tck;
   
     `endif
 
-    assign LED0          = ~hard_rst_n;
-    assign LED1          =  heartbeat;
-    assign D_OUT_T12     =  ~heartbeat;
-    assign LED3          =  1'b1;
-    assign LED4          =  1'b0;
-    assign LED5          =  1'b1;
+    assign LED0             = ~hard_rst_n;
+    assign LED5             =  heartbeat;
+    assign D_OUT_T12        =  ~heartbeat;
+    assign LED3             =  1'b1;
+    assign LED4             =  1'b0;
     
     
-    assign ahb_core_frq_sel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0000;
-    assign uart_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
-    assign dmem_hsel = ahb_dmem_haddr[31:16] == 16'b1111_1111_1111_1111;   //rom
-    assign imem_hsel = ahb_imem_haddr[31:16] == 16'b1111_1111_1111_1111;
+    assign ddr_hsel         = ahb_dmem_haddr[31:29] == 3'b100;
+    assign ahb_core_frq_sel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0000; //frq register
+    assign uart_hsel        = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
+    assign dmem_hsel        = ahb_dmem_haddr[31:16] == 16'b1111_1111_1111_1111;   //rom
+    assign imem_hsel        = ahb_imem_haddr[31:16] == 16'b1111_1111_1111_1111;
     
-    assign hsel_     = {ahb_core_frq_sel, dmem_hsel, uart_hsel};
-    assign hreadyout = {1'b1, dmem_ready, uart_hready};
-    assign hresp     = {1'b0, dmem_resp, uart_hresp};
+    assign hsel_            = {ddr_hsel, ahb_core_frq_sel, dmem_hsel, uart_hsel};
+    assign hreadyout        = {rd_data_rdy_ddr, 1'b1, dmem_ready, uart_hready};
+    assign hresp            = {1'b0, 1'b0, dmem_resp, uart_hresp};
     
     
     ahb_lite_uart16550
@@ -379,6 +435,7 @@ module tang20k_scr1
     .rdata_0 (hrdata_0),
     .rdata_1 (hrdata_1),
     .rdata_2 (core_frq),
+    .rdata_3 (ddr_r_data),
     .resp (hresp),
     .readyout (hreadyout),
     

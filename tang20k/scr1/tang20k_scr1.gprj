@@ -22,10 +22,11 @@
         <File path="./ip/ahb_lite_uart16550/src/uart16550/uart_sync_flops.v" type="file.verilog" enable="1"/>
         <File path="./ip/ahb_lite_uart16550/src/uart16550/uart_tfifo.v" type="file.verilog" enable="1"/>
         <File path="./ip/ahb_lite_uart16550/src/uart16550/uart_transmitter.v" type="file.verilog" enable="1"/>
-        <!-- <File path="./ip/ddr_mem/ddr_mem.sv" type="file.verilog" enable="1"/> -->
+        
+        <File path="./ip/ddr3_top/ddr3_top.sv" type="file.verilog" enable="1"/>
 
-        <!-- <File path="./src/ddr3_memory_interface/ddr3_memory_interface.v" type="file.verilog" enable="1"/> -->
-        <!-- <File path="./src/gowin_rpll/gowin_rpll.v" type="file.verilog" enable="1"/> -->
+        <File path="./src/ddr3_memory_interface/ddr3_memory_interface.v" type="file.verilog" enable="1"/>
+        <File path="./src/gowin_rpll/gowin_rpll.v" type="file.verilog" enable="1"/>
         <File path="./src/gowin_dpb/gowin_dpb.v" type="file.verilog" enable="1"/>
 
 
