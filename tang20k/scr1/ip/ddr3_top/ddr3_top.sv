@@ -52,6 +52,8 @@ always_comb begin
     if(init_calib_complete)begin
         rst_out = '1;
     end
+    else
+        rst_out = '0;
 end
 
 always_comb begin

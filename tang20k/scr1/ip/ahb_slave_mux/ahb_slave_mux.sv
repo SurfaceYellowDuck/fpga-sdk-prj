@@ -48,9 +48,9 @@ always_comb begin
     end
 
     else if(local_hsel[3] == 1) begin
-        hready = readyout[2];
+        hready = readyout[3];
         hrdata = rdata_3;
-        hresp  = resp[2];
+        hresp  = resp[3];
     end
     else begin
         hready = 1'b1;

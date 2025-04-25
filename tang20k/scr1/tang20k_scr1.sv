@@ -187,7 +187,7 @@ ddr3_top ddr3(
     .ddr_dqs_n   (ddr_dqs_n)
 );
 
-    assign extn_rst_in_n = RESETn | ~ddr_rst_out;
+    assign extn_rst_in_n = RESETn | ddr_rst_out;
     assign cpu_clk       = CLK;
     assign pwrup_rst_n   = RESETn;
     
@@ -361,7 +361,7 @@ ddr3_top ddr3(
     assign LED4             =  1'b0;
     
     
-    assign ddr_hsel         = ahb_dmem_haddr[31:29] == 3'b100;
+    assign ddr_hsel         = ahb_dmem_haddr[31:28] == 4'b1000;
     assign ahb_core_frq_sel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0000; //frq register
     assign uart_hsel        = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
     assign dmem_hsel        = ahb_dmem_haddr[31:16] == 16'b1111_1111_1111_1111;   //rom
