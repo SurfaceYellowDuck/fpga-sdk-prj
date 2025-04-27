@@ -1,15 +1,15 @@
 module ddr3_top(
-    input          clk,
-    input          rst_n,
-    input          we,
-    input  [31:0]  wr_data,
-    input  [27:0]  addr,
-    input          ddr_hsel,
+    input                               clk,
+    input                               rst_n,
+    input                               we,
+    input  [31:0]                       wr_data,
+    input  [27:0]                       addr,
+    input                               ddr_hsel,
 
-    output [31:0]  r_data,
-    output                          ddr_rdy,
+    output [31:0]                       r_data,
+    output                              ddr_rdy,
     // output         cmd_ready,
-    output logic         rst_out,
+    output logic                        rst_out,
 
     output [13:0]                       ddr_addr,       //ROW_WIDTH=14
     output [2:0]                        ddr_bank,       //BANK_WIDTH=3

@@ -11,7 +11,6 @@ module ahb_slave_mux
                 input        [31:0]                  rdata_3,
                 input        [SLAVE_DEVISES_CNT-1:0] resp,
                 input        [SLAVE_DEVISES_CNT-1:0] readyout,
-                // input                                ddr_rdy,
                 output logic [31:0]                  hrdata,
                 output logic                         hresp,
                 output logic                         hready
@@ -20,7 +19,7 @@ logic [SLAVE_DEVISES_CNT-1:0] local_hsel;
 
 always_ff @(posedge clk)begin
     if (~rst_n)begin
-        local_hsel <= 2'b0;
+        local_hsel <= 4'b0;
     end
     else if (local_hsel[3] && ~readyout[3])begin
         local_hsel[3] <= '1;

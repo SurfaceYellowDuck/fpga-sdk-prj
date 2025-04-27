@@ -55,10 +55,10 @@ module tang20k_scr1
     output                              ddr_cke,
     output                              ddr_odt,
     output                              ddr_reset_n,
-    output                         ddr_dm,         //DM_WIDTH=2
-    inout   [7:0]                      ddr_dq,         //DQ_WIDTH=16
-    inout                          ddr_dqs,        //DQS_WIDTH=2
-    inout                          ddr_dqs_n      //DQS_WIDTH=2
+    output                              ddr_dm,         //DM_WIDTH=2
+    inout   [7:0]                       ddr_dq,         //DQ_WIDTH=16
+    inout                               ddr_dqs,        //DQS_WIDTH=2
+    inout                               ddr_dqs_n      //DQS_WIDTH=2
 );
 
 
@@ -160,6 +160,7 @@ logic        ddr_rst_out;
 // end
 assign LED0 = ddr_rst_out;
 assign LED3 = RESETn;
+
 ddr3_top ddr3(
     .clk      (cpu_clk),
     .rst_n      (RESETn),
