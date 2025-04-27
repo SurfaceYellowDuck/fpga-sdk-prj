@@ -46,7 +46,7 @@ logic        cmd_ready;
 
 assign ddr_rdy  = (rd_data_valid && rd_data_end && cmd_ready) || (wr_data_rdy && cmd_ready);
 assign r_data           = rd_data[63:32];
-assign wr_data_mask     = {8'b1};
+assign wr_data_mask     = {4'b1, 4'b0};
 
 always_ff @(posedge clk) begin
     if(init_calib_complete)begin
