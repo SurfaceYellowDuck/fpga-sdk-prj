@@ -164,7 +164,7 @@ Running technical mapping ...
 WARN  (NL0002) : The module "~OUT_FIFO.DDR3_Memory_Interface_Top" instantiated to "u_out_fifo" is swept in optimizing("/Users/nikitalukonenko/Desktop/Gowin/IDE/ipcore/DDR3/data/ddr3_1_4code_hs/ddr3_1_4code_hs.v":7173)
 WARN  (NL0002) : The module "~of_fifo_ctrl.DDR3_Memory_Interface_Top" instantiated to "of_fifo_ctrl_inst" is swept in optimizing("/Users/nikitalukonenko/Desktop/Gowin/IDE/ipcore/DDR3/data/ddr3_1_4code_hs/ddr3_1_4code_hs.v":7173)
 WARN  (NL0002) : The module "~gwmc_rd_data.DDR3_Memory_Interface_Top" instantiated to "gw_rd_data0" is swept in optimizing("/Users/nikitalukonenko/Desktop/Gowin/IDE/ipcore/DDR3/data/ddr3_1_4code_hs/ddr3_1_4code_hs.v":7173)
-[95%] Generate netlist file "/Users/nikitalukonenko/clear_start/fpga-sdk-prj/tang20k/scr1/src/ddr3_memory_interface/temp/DDR3/ddr3_memory_interface.vg" completed
-Generate template file "/Users/nikitalukonenko/clear_start/fpga-sdk-prj/tang20k/scr1/src/ddr3_memory_interface/temp/DDR3/ddr3_memory_interface_tmp.v" completed
-[100%] Generate report file "/Users/nikitalukonenko/clear_start/fpga-sdk-prj/tang20k/scr1/src/ddr3_memory_interface/temp/DDR3/ddr3_memory_interface_syn.rpt.html" completed
+[95%] Generate netlist file "/Users/nikitalukonenko/Desktop/tst/fpga-sdk-prj/tang20k/scr1/src/ddr3_memory_interface/temp/DDR3/ddr3_memory_interface.vg" completed
+Generate template file "/Users/nikitalukonenko/Desktop/tst/fpga-sdk-prj/tang20k/scr1/src/ddr3_memory_interface/temp/DDR3/ddr3_memory_interface_tmp.v" completed
+[100%] Generate report file "/Users/nikitalukonenko/Desktop/tst/fpga-sdk-prj/tang20k/scr1/src/ddr3_memory_interface/temp/DDR3/ddr3_memory_interface_syn.rpt.html" completed
 GowinSynthesis finish

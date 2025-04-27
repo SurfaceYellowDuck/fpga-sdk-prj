@@ -44,6 +44,6 @@ module rom_mem
     end
     
     initial begin
-        $readmemh("scbl_2.mem", rom_block);
+        $readmemh("scbl_3.mem", rom_block);
     end
     endmodule: rom_mem

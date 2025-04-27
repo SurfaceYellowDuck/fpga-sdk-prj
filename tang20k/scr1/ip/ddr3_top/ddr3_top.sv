@@ -1,13 +1,13 @@
 module ddr3_top(
     input          clk,
-    input          rst,
+    input          rst_n,
     input          we,
     input  [31:0]  wr_data,
     input  [27:0]  addr,
     input          ddr_hsel,
 
     output [31:0]  r_data,
-    output         ddr_rdy,
+    output                          ddr_rdy,
     // output         cmd_ready,
     output logic         rst_out,
 
@@ -22,10 +22,10 @@ module ddr3_top(
     output                              ddr_cke,
     output                              ddr_odt,
     output                              ddr_reset_n,
-    output                         ddr_dqm,         //DM_WIDTH=1
-    inout   [7:0]                      ddr_dq,         //DQ_WIDTH=8
-    inout                          ddr_dqs,        //DQS_WIDTH=1
-    inout                          ddr_dqs_n      //DQS_WIDTH=1
+    output                              ddr_dqm,         //DM_WIDTH=1
+    inout   [7:0]                       ddr_dq,         //DQ_WIDTH=8
+    inout                               ddr_dqs,        //DQS_WIDTH=1
+    inout                               ddr_dqs_n      //DQS_WIDTH=1
 );
 
 logic        clk_mem;
@@ -46,43 +46,66 @@ logic        cmd_ready;
 
 assign ddr_rdy  = (rd_data_valid && rd_data_end && cmd_ready) || (wr_data_rdy && cmd_ready);
 assign r_data           = rd_data[63:32];
-assign wr_data_mask     = {4'b1, 4'b0};
+assign wr_data_mask     = {8'b1};
 
-always_comb begin
+always_ff @(posedge clk) begin
     if(init_calib_complete)begin
-        rst_out = '1;
+        rst_out <= '1;
     end
     else
-        rst_out = '0;
+        rst_out <= '0;
 end
 
-always_comb begin
-    if (ddr_hsel && we && cmd_ready)begin
-        cmd = 3'b000;
-        cmd_en = '1;
-        wr_data_en = '1;
-        wr_data_end = '1;
-    end
-    else if (ddr_hsel && ~we && cmd_ready)begin
-        cmd = 3'b001;
-        cmd_en = '1;
+always_ff @(posedge clk)begin
+	 if (ddr_hsel && we && cmd_ready)begin
+		cmd <= 3'b000;
+        cmd_en <= '1;
+        wr_data_en <= '1;
+        wr_data_end <= '1;
+	 end
+     
+     else if (ddr_hsel && ~we && cmd_ready)begin
+        cmd <= 3'b001;
+        cmd_en <= '1;
     end
     else
-        cmd_en = '0;
+        cmd_en <= '0;
+        wr_data_en <= '0;
+        wr_data_end <= '0;
 end
+
+// always_comb begin
+//     if (ddr_hsel && we && cmd_ready)begin
+//         cmd = 3'b000;
+//         cmd_en = '1;
+//         wr_data_en = '1;
+//         wr_data_end = '1;
+//     end
+//     else if (ddr_hsel && ~we && cmd_ready)begin
+//         cmd = 3'b001;
+//         // wr_data_en = '0;
+//         // wr_data_end = '1;
+//         cmd_en = '1;
+//     end
+//     else
+        // cmd_en = '0;
+        // wr_data_en = '0;
+        // wr_data_end = '0;
+// end
 
 Gowin_rPLL PLL
 (
     .clkin (clk),
     .clkout (clk_mem),
-    .lock (lock)
+    .lock (lock),
+    .reset (~rst_n)
 );
 
 DDR3_Memory_Interface_Top ddr3_mem(
 		.clk(clk), //input clk
 		.memory_clk(clk_mem), //input memory_clk
 		.pll_lock(lock), //input pll_lock
-		.rst_n(rst), //input rst_n
+		.rst_n(rst_n), //input rst_n
 		.clk_out(clk_mem_out), //output clk_out
 		.ddr_rst(ddr_rst), //output ddr_rst
 		.init_calib_complete(init_calib_complete), //output init_calib_complete

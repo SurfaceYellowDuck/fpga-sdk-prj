@@ -5,7 +5,7 @@
 //Part Number: GW2A-LV18PG256C8/I7
 //Device: GW2A-18
 //Device Version: C
-//Created Time: Thu Apr 24 18:10:43 2025
+//Created Time: Sun Apr 27 19:52:06 2025
 
 //Change the instance name and port connections to the signal names
 //--------Copy here to design--------
@@ -13,6 +13,7 @@
     Gowin_rPLL your_instance_name(
         .clkout(clkout), //output clkout
         .lock(lock), //output lock
+        .reset(reset), //input reset
         .clkin(clkin) //input clkin
     );
 

@@ -158,13 +158,14 @@ logic        ddr_rst_out;
 // always_comb begin
 //     if()
 // end
-
+assign LED0 = ddr_rst_out;
+assign LED3 = RESETn;
 ddr3_top ddr3(
     .clk      (cpu_clk),
-    .rst      (cpu_rst_n),
+    .rst_n      (RESETn),
     .we       (ahb_dmem_hwrite),
     .wr_data  (ahb_dmem_hwdata),
-    .addr     ({ahb_dmem_haddr[27:0]}),
+    .addr     ({ahb_dmem_haddr[27:0]} << 2),
     .ddr_hsel (ddr_hsel),
 
     .r_data      (ddr_r_data),
@@ -187,7 +188,7 @@ ddr3_top ddr3(
     .ddr_dqs_n   (ddr_dqs_n)
 );
 
-    assign extn_rst_in_n = RESETn | ddr_rst_out;
+    assign extn_rst_in_n = RESETn && ddr_rst_out;
     assign cpu_clk       = CLK;
     assign pwrup_rst_n   = RESETn;
     
@@ -350,14 +351,14 @@ ddr3_top ddr3(
 
     assign JTAG_TDO = (jtag_tdo_en == 1'b1) ? jtag_tdo : 1'bZ;;
 
-    // assign LED2 = jtag_tck;
+    // assign LED2 = 0;
   
     `endif
 
-    assign LED0             = ~hard_rst_n;
+    // assign LED0             = ~hard_rst_n;
     assign LED5             =  heartbeat;
     assign D_OUT_T12        =  ~heartbeat;
-    assign LED3             =  1'b1;
+    // assign LED3             =  1'b1;
     assign LED4             =  1'b0;
     
     

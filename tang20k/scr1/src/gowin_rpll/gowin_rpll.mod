@@ -7,7 +7,7 @@
 
 -mod_name Gowin_rPLL
 -file_name gowin_rpll
--path /Users/nikitalukonenko/clear_start/fpga-sdk-prj/tang20k/scr1/src/gowin_rpll/
+-path /Users/nikitalukonenko/Desktop/tst/fpga-sdk-prj/tang20k/scr1/src/gowin_rpll/
 -type PLL
 -rPll true
 -file_type vlg
@@ -18,13 +18,14 @@
 -fbdiv_sel 4
 -dyn_odiv_sel false
 -odiv_sel 8
--dyn_da_en false
--rst_sig false
+-dyn_da_en true
+-rst_sig true
 -rst_sig_p false
 -fclkin 27
 -clkfb_sel 0
 -en_lock true
 -clkout_bypass false
+-clkout_ft_dir 1
 -en_clkoutp false
 -clkoutp_bypass false
 -en_clkoutd false
