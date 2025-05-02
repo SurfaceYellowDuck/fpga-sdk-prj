@@ -24,7 +24,10 @@ always_ff @(posedge clk)begin
     else if (local_hsel[3] && ~readyout[3])begin
         local_hsel[3] <= '1;
     end
-    else if (htrans != 2'b0 && hsel_s != 4'b0) begin
+    else if (local_hsel[4] && ~readyout[4])begin
+        local_hsel[4] <= '1;
+    end
+    else if (htrans != 2'b0 && hsel_s != 5'b0) begin
         local_hsel <= hsel_s;
     end      
 end
@@ -50,6 +53,11 @@ always_comb begin
         hready = readyout[3];
         hrdata = rdata_3;
         hresp  = resp[3];
+    end
+    else if(local_hsel[4] == 1) begin
+        hready = readyout[4];
+        hrdata = rdata_3;
+        hresp  = resp[4];
     end
     else begin
         hready = 1'b1;

@@ -13,6 +13,11 @@
         <File path="./ip/rom_bsram_memory/rom_bsram.sv" type="file.verilog" enable="1"/>
         <File path="./ip/ahb_slave_mux/ahb_slave_mux.sv" type="file.verilog" enable="1"/>
 
+        <File path="./ip/AHB_GPIO/AHB-GPIO_v1.0/verilog/cmsdk_ahb_gpio.v" type="file.verilog" enable="1"/>
+        <File path="./ip/AHB_GPIO/AHB-GPIO_v1.0/verilog/cmsdk_ahb_to_iop.v" type="file.verilog" enable="1"/>
+        <File path="./ip/AHB_GPIO/AHB-GPIO_v1.0/verilog/cmsdk_iop_gpio.v" type="file.verilog" enable="1"/>
+
+
         <File path="./ip/ahb_lite_uart16550/src/ahb_lite_uart16550.v" type="file.verilog" enable="1"/>
         <File path="./ip/ahb_lite_uart16550/src/uart16550/raminfr.v" type="file.verilog" enable="1"/>
         <File path="./ip/ahb_lite_uart16550/src/uart16550/uart_defines.v" type="file.verilog" enable="1"/>
