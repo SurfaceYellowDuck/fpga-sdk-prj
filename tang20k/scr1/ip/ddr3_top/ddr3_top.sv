@@ -25,7 +25,8 @@ module ddr3_top(
     output                              ddr_dqm,         //DM_WIDTH=1
     inout   [7:0]                       ddr_dq,         //DQ_WIDTH=8
     inout                               ddr_dqs,        //DQS_WIDTH=1
-    inout                               ddr_dqs_n      //DQS_WIDTH=1
+    inout                               ddr_dqs_n,      //DQS_WIDTH=1
+    output logic                              ddr_calib_finished
 );
 
 logic        clk_mem;
@@ -49,11 +50,20 @@ assign r_data           = rd_data[63:32];
 assign wr_data_mask     = {4'b1, 4'b0};
 
 always_ff @(posedge clk) begin
-    if(init_calib_complete)begin
+    if(ext_complete[1])begin
         rst_out <= '1;
+        ddr_calib_finished <= '0;
     end
     else
         rst_out <= '0;
+end
+
+//sync logic
+logic [1:0] ext_complete;
+always_ff @(posedge clk)
+begin
+        ext_complete[0] <= init_calib_complete;
+        ext_complete[1] <= ext_complete[0];
 end
 
 always_ff @(posedge clk)begin

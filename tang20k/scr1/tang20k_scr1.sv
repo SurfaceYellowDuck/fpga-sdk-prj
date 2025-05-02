@@ -63,10 +63,11 @@ module tang20k_scr1
 
 
 
-logic        rd_data_rdy_ddr;
-logic [31:0] ddr_r_data;
-logic        ddr_command_ready;
-logic        ddr_rst_out;
+logic              rd_data_rdy_ddr;
+logic [31:0]       ddr_r_data;
+logic              ddr_command_ready;
+logic              ddr_rst_out;
+
 
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     //  Signals / Variables declarations
@@ -158,16 +159,16 @@ logic        ddr_rst_out;
 // always_comb begin
 //     if()
 // end
-assign LED0 = ddr_rst_out;
+// assign LED0 = ddr_rst_out;
 assign LED3 = RESETn;
 
 ddr3_top ddr3(
-    .clk      (cpu_clk),
+    .clk        (cpu_clk),
     .rst_n      (RESETn),
-    .we       (ahb_dmem_hwrite),
-    .wr_data  (ahb_dmem_hwdata),
-    .addr     ({ahb_dmem_haddr[27:0]} << 2),
-    .ddr_hsel (ddr_hsel),
+    .we         (ahb_dmem_hwrite),
+    .wr_data    (ahb_dmem_hwdata),
+    .addr       ({ahb_dmem_haddr[27:0]}),
+    .ddr_hsel   (ddr_hsel),
 
     .r_data      (ddr_r_data),
     .ddr_rdy     (rd_data_rdy_ddr),
@@ -187,11 +188,14 @@ ddr3_top ddr3(
     .ddr_dq      (ddr_dq),
     .ddr_dqs     (ddr_dqs),
     .ddr_dqs_n   (ddr_dqs_n)
+    .ddr_dqs_n   (ddr_dqs_n),
+
+    .ddr_calib_finished(LED2)
 );
 
-    assign extn_rst_in_n = RESETn && ddr_rst_out;
+    assign extn_rst_in_n = RESETn;
     assign cpu_clk       = CLK;
-    assign pwrup_rst_n   = RESETn;
+    assign pwrup_rst_n   = RESETn && ddr_rst_out;
     
     always_ff @(posedge cpu_clk, negedge pwrup_rst_n)
     begin
@@ -209,12 +213,14 @@ ddr3_top ddr3(
         if (~pwrup_rst_n) begin
             hard_rst_n       <= 1'b0;
             hard_rst_n_count <= '0;
-            end else begin
+            end 
+        else begin
             if (hard_rst_n) begin
                 // hard_rst_n == 1 - de-asserted
                 hard_rst_n       <= extn_rst_n;
                 hard_rst_n_count <= '0;
-                end else begin
+            end 
+            else begin
                 // hard_rst_n == 0 - asserted
                 if (extn_rst_n) begin
                     if (hard_rst_n_count == '1) begin
@@ -224,7 +230,8 @@ ddr3_top ddr3(
                         end else begin
                         hard_rst_n_count <= hard_rst_n_count + 1'b1;
                     end
-                    end else begin
+                end 
+                else begin
                     // If extn_rst_n is asserted within 16-cycles window -> start
                     // counting from the beginning
                     hard_rst_n_count <= '0;
@@ -376,73 +383,73 @@ ddr3_top ddr3(
     
     ahb_lite_uart16550
     i_uart(
-    .HCLK (cpu_clk),
-    .HRESETn (soc_rst_n),
-    .HADDR (ahb_dmem_haddr),
-    .HBURST (ahb_dmem_hburst),
-    .HMASTLOCK (1'b1),
-    .HPROT (ahb_dmem_hprot),
-    .HSEL (uart_hsel),
-    .HSIZE (ahb_dmem_hsize),
-    .HTRANS (ahb_dmem_htrans),
-    .HWDATA (ahb_dmem_hwdata),
-    .HWRITE (ahb_dmem_hwrite),
-    .HREADY_IN (ahb_dmem_hready),
-    .HRDATA (hrdata_0),
-    .HREADY (uart_hready),
-    .HRESP (uart_hresp),
-    .SI_Endian (1'b1),
+    .HCLK       (cpu_clk),
+    .HRESETn    (soc_rst_n),
+    .HADDR      (ahb_dmem_haddr),
+    .HBURST     (ahb_dmem_hburst),
+    .HMASTLOCK  (1'b1),
+    .HPROT      (ahb_dmem_hprot),
+    .HSEL       (uart_hsel),
+    .HSIZE      (ahb_dmem_hsize),
+    .HTRANS     (ahb_dmem_htrans),
+    .HWDATA     (ahb_dmem_hwdata),
+    .HWRITE     (ahb_dmem_hwrite),
+    .HREADY_IN  ('1),
+    .HRDATA     (hrdata_0),
+    .HREADY     (uart_hready),
+    .HRESP      (uart_hresp),
+    .SI_Endian  (1'b1),
     
-    .UART_SRX (UART_RX),
-    .UART_STX (UART_TX),
-    .UART_RTS (uart_rts_n),
-    .UART_CTS (uart_rts_n),
-    .UART_DTR (uart_dtr_n),
-    .UART_DSR (uart_dtr_n),
-    .UART_RI  ('1),
-    .UART_DCD ('1),
+    .UART_SRX   (UART_RX),
+    .UART_STX   (UART_TX),
+    .UART_RTS   (uart_rts_n),
+    .UART_CTS   (uart_rts_n),
+    .UART_DTR   (uart_dtr_n),
+    .UART_DSR   (uart_dtr_n),
+    .UART_RI    ('1),
+    .UART_DCD   ('1),
     
-    .UART_INT (uart_irq)
+    .UART_INT   (uart_irq)
     );
     
     rom_mem
     soc_rom_mem(
-    .clk (cpu_clk),
-    .rst_n (soc_rst_n),
-    .dmem_hsel (dmem_hsel),
-    .dmem_hready_in(ahb_dmem_hready),
+    .clk            (cpu_clk),
+    .rst_n          (soc_rst_n),
+    .dmem_hsel      (dmem_hsel),
+    .dmem_hready_in ('1),
     
-    .imem_addr (ahb_imem_haddr[$clog2(ROM_SIZE)+1:2]),
-    .imem_trans (ahb_imem_htrans),
-    .imem_hsel (imem_hsel),
+    .imem_addr      (ahb_imem_haddr[$clog2(ROM_SIZE)+1:2]),
+    .imem_trans     (ahb_imem_htrans),
+    .imem_hsel      (imem_hsel),
     
-    .imem_ready (ahb_imem_hready),
-    .imem_resp (ahb_imem_hresp),
-    .imem_data (ahb_imem_hrdata),
+    .imem_ready     (ahb_imem_hready),
+    .imem_resp      (ahb_imem_hresp),
+    .imem_data      (ahb_imem_hrdata),
     
-    .dmem_addr (ahb_dmem_haddr[$clog2(ROM_SIZE)+1:2]),
-    .dmem_trans (ahb_dmem_htrans),
+    .dmem_addr      (ahb_dmem_haddr[$clog2(ROM_SIZE)+1:2]),
+    .dmem_trans     (ahb_dmem_htrans),
     
-    .dmem_ready (dmem_ready),
-    .dmem_resp (dmem_resp),
-    .dmem_data (hrdata_1)
+    .dmem_ready     (dmem_ready),
+    .dmem_resp      (dmem_resp),
+    .dmem_data      (hrdata_1)
     );
     
-    ahb_slave_mux
+ahb_slave_mux
     soc_ahb_slave_mux(
-    .clk (cpu_clk),
-    .rst_n (soc_rst_n),
-    .htrans (ahb_dmem_htrans),
-    .hsel_s (hsel_),
-    .rdata_0 (hrdata_0),
-    .rdata_1 (hrdata_1),
-    .rdata_2 (core_frq),
-    .rdata_3 (ddr_r_data),
-    .resp (hresp),
-    .readyout (hreadyout),
+    .clk        (cpu_clk),
+    .rst_n      (soc_rst_n),
+    .htrans     (ahb_dmem_htrans),
+    .hsel_s     (hsel_),
+    .rdata_0    (hrdata_0),
+    .rdata_1    (hrdata_1),
+    .rdata_2    (core_frq),
+    .rdata_3    (ddr_r_data),
+    .resp       (hresp),
+    .readyout   (hreadyout),
     
-    .hrdata (ahb_dmem_hrdata),
-    .hresp (ahb_dmem_hresp),
-    .hready (ahb_dmem_hready)
-    );
+    .hrdata     (ahb_dmem_hrdata),
+    .hresp      (ahb_dmem_hresp),
+    .hready     (ahb_dmem_hready)
+);
     endmodule: tang20k_scr1

@@ -5,7 +5,7 @@
 //Part Number: GW2A-LV18PG256C8/I7
 //Device: GW2A-18
 //Device Version: C
-//Created Time: Sun Apr 27 19:52:05 2025
+//Created Time: Tue Apr 29 19:41:37 2025
 
 module Gowin_rPLL (clkout, lock, reset, clkin);
 
@@ -47,7 +47,7 @@ defparam rpll_inst.FBDIV_SEL = 3;
 defparam rpll_inst.DYN_ODIV_SEL = "false";
 defparam rpll_inst.ODIV_SEL = 8;
 defparam rpll_inst.PSDA_SEL = "0000";
-defparam rpll_inst.DYN_DA_EN = "true";
+defparam rpll_inst.DYN_DA_EN = "false";
 defparam rpll_inst.DUTYDA_SEL = "1000";
 defparam rpll_inst.CLKOUT_FT_DIR = 1'b1;
 defparam rpll_inst.CLKOUTP_FT_DIR = 1'b1;
