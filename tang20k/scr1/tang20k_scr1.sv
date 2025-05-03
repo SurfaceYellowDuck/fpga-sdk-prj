@@ -187,9 +187,7 @@ ddr3_top ddr3(
     .ddr_dqm      (ddr_dm),
     .ddr_dq      (ddr_dq),
     .ddr_dqs     (ddr_dqs),
-    .ddr_dqs_n   (ddr_dqs_n)
     .ddr_dqs_n   (ddr_dqs_n),
-
     .ddr_calib_finished(LED2)
 );
 
