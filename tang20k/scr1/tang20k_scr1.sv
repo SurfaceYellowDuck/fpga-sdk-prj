@@ -58,7 +58,9 @@ module tang20k_scr1
     output                              ddr_dm,         //DM_WIDTH=2
     inout   [7:0]                       ddr_dq,         //DQ_WIDTH=16
     inout                               ddr_dqs,        //DQS_WIDTH=2
-    inout                               ddr_dqs_n      //DQS_WIDTH=2
+    inout                               ddr_dqs_n,      //DQS_WIDTH=2
+    inout   [15:0]                      gpio_pins
+    // output  [15:0]                      gpio_output_pins
 );
 
 
@@ -69,7 +71,14 @@ logic              ddr_command_ready;
 logic              ddr_rst_out;
 
 logic              gpio_hready;
-logic [15:0]       gpio_input;
+// logic [15:0]       gpio_input_pins;
+logic              gpio_hresp;
+logic [31:0]       gpio_hrdata;
+logic [15:0]       gpio_port_en;
+logic [15:0]       gpio_interrupts;
+logic [15:0]       portfunc;
+logic              combined_int;
+//assign portfunc = '0;
 
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     //  Signals / Variables declarations
@@ -346,7 +355,7 @@ ddr3_top ddr3(
     );
     
     `ifdef SCR1_IPIC_EN
-    assign scr1_irq = {31'd0, uart_irq};
+    assign scr1_irq = {gpio_interrupts, uart_irq};
     `else
     assign scr1_irq = uart_irq;
     `endif // SCR1_IPIC_EN
@@ -370,7 +379,7 @@ ddr3_top ddr3(
     assign LED4             =  1'b0;
     
     
-    assign gpio_sel         = ahb_dmem_haddr[31:12] == 21'b1111_1111_0000_1111_1111_1;
+    assign gpio_sel         = ahb_dmem_haddr[31:12] == 21'b1111_1111_0001_1111_1111_1;
     assign ddr_hsel         = ahb_dmem_haddr[31:28] == 4'b1000;
     assign ahb_core_frq_sel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0000; //frq register
     assign uart_hsel        = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
@@ -436,24 +445,43 @@ ddr3_top ddr3(
     .dmem_data      (hrdata_1)
     );
 
+logic gready;
+assign gready = gpio_sel && (ahb_dmem_htrans != 2'b0);
+logic [31:0] gdata;
+assign gdata = {16'b0, ahb_dmem_hwdata[15:0] & gpio_port_en};
+
+reg [128:0] dummy_gpioint;  
+// reg        dummy_combint;  
+  
+always @(posedge cpu_clk or negedge soc_rst_n) begin  
+    if (~soc_rst_n) begin  
+        dummy_gpioint <= 128'h0000;  
+        // dummy_combint <= 1'b0;  
+    end else begin  
+        dummy_gpioint <= {portfunc, combined_int, gpio_port_en};  
+        // dummy_combint <= combint;  
+    end  
+end
+
+// synthesis dont_touch = "true" 
 cmsdk_ahb_gpio gpio_controller (
       // AHB Inputs
   .HCLK       (cpu_clk),          // Connect to system clock
   .HRESETn    (soc_rst_n),       // Connect to active-low system reset
   .FCLK       (cpu_clk),          // Typically same as HCLK
   .HSEL       (gpio_sel),        // Connect from AHB decoder
-  .HREADY     (gpio_hready),        // Connect from AHB bus
+  .HREADY     (gready),        // Connect from AHB bus
   .HTRANS     (ahb_dmem_htrans),        // Connect from AHB controller
   .HSIZE      (ahb_dmem_hsize),         // Connect from AHB controller
   .HWRITE     (ahb_dmem_hwrite),        // Connect from AHB controller
   .HADDR      (ahb_dmem_haddr[11:0]),   // Connect relevant address bits
-  .HWDATA     (ahb_dmem_hwdata),        // Connect from AHB write data bus
+  .HWDATA     (gdata),        // Connect from AHB write data bus
 
   // Engineering-change-order revision
   .ECOREVNUM  (4'h0),             // Tie to zero if unused
 
   // GPIO Interface
-  .PORTIN     (gpio_input),       // Connect to external GPIO pins input
+  .PORTIN     (gpio_pins),       // Connect to external GPIO pins input
 
   // AHB Outputs
   .HREADYOUT  (gpio_hready),      // Connect to AHB ready mux
@@ -461,9 +489,9 @@ cmsdk_ahb_gpio gpio_controller (
   .HRDATA     (gpio_hrdata),      // Connect to AHB read data mux
 
   // GPIO Output Controls
-  .PORTOUT    (gpio_output),      // Connect to external GPIO output
-  .PORTEN     (gpio_out_en),      // Connect to output enable control
-  .PORTFUNC   (gpio_alt_func),    // Connect to alternate function control
+  .PORTOUT    (gpio_pins),      // Connect to external GPIO output
+  .PORTEN     (gpio_port_en),      // Connect to output enable control
+  .PORTFUNC   (portfunc),    // Connect to alternate function control
 
   // Interrupts
   .GPIOINT    (gpio_interrupts),  // Individual pin interrupts
@@ -480,6 +508,7 @@ ahb_slave_mux
     .rdata_1    (hrdata_1),
     .rdata_2    (core_frq),
     .rdata_3    (ddr_r_data),
+    .rdata_4    (gpio_hrdata),
     .resp       (hresp),
     .readyout   (hreadyout),
     

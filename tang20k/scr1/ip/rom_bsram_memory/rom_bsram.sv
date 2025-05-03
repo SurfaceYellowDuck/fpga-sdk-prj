@@ -44,6 +44,6 @@ module rom_mem
     end
     
     initial begin
-        $readmemh("scbl_3.mem", rom_block);
+        $readmemh("tm1638_display.mem", rom_block);
     end
     endmodule: rom_mem

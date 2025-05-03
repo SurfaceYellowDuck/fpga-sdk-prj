@@ -9,6 +9,7 @@ module ahb_slave_mux
                 input        [31:0]                  rdata_1,
                 input        [31:0]                  rdata_2,
                 input        [31:0]                  rdata_3,
+                input        [31:0]                  rdata_4,
                 input        [SLAVE_DEVISES_CNT-1:0] resp,
                 input        [SLAVE_DEVISES_CNT-1:0] readyout,
                 output logic [31:0]                  hrdata,
@@ -56,7 +57,7 @@ always_comb begin
     end
     else if(local_hsel[4] == 1) begin
         hready = readyout[4];
-        hrdata = rdata_3;
+        hrdata = rdata_4;
         hresp  = resp[4];
     end
     else begin
