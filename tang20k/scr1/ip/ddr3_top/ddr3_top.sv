@@ -45,12 +45,19 @@ logic        rd_data_valid;
 logic        rd_data_end;
 logic        cmd_ready;
 
-assign ddr_rdy  = (rd_data_valid && rd_data_end && cmd_ready) || (wr_data_rdy && cmd_ready);
-assign r_data           = rd_data[63:32];
+logic [1:0] cmd_ready_sync;
+logic [1:0] init_complete_sync;
+logic [1:0] wr_data_rdy_sync;
+logic [127:0] rd_data_sync;
+logic [1:0] rd_data_valid_sync;
+logic [1:0] rd_data_end_sync;
+
+assign ddr_rdy  = (rd_data_valid_sync[1] && rd_data_end_sync[1] && cmd_ready_sync[1]) || (wr_data_rdy_sync[1] && cmd_ready_sync[1]);
+assign r_data           = rd_data_sync[31:0];
 assign wr_data_mask     = {4'b1, 4'b0};
 
 always_ff @(posedge clk) begin
-    if(ext_complete[1])begin
+    if(init_complete_sync[1])begin
         rst_out <= '1;
         ddr_calib_finished <= '0;
     end
@@ -59,12 +66,32 @@ always_ff @(posedge clk) begin
 end
 
 //sync logic
-logic [1:0] ext_complete;
+
 always_ff @(posedge clk)
 begin
-        ext_complete[0] <= init_calib_complete;
-        ext_complete[1] <= ext_complete[0];
+        cmd_ready_sync[0] <= cmd_ready;
+        cmd_ready_sync[1] <= cmd_ready_sync[0];
+
+        init_complete_sync[0] <= init_calib_complete;
+        init_complete_sync[1] <= init_complete_sync[0];
+
+        wr_data_rdy_sync[0] <= wr_data_rdy;
+        wr_data_rdy_sync[1] <= wr_data_rdy_sync[0];
+
+        rd_data_sync[127:64] <= rd_data;
+        rd_data_sync[63:0] <= rd_data_sync[127:64];
+
+        rd_data_valid_sync[0] <= rd_data_valid;
+        rd_data_valid_sync[1] <= rd_data_valid_sync[0];
+
+        rd_data_end_sync[0] <= rd_data_end;
+        rd_data_end_sync[1] <= rd_data_end_sync[0];
 end
+//sync init_calib_complete
+// always_ff @(posedge clk)
+// begin
+        
+// end
 
 always_ff @(posedge clk)begin
 	 if (ddr_hsel && we && cmd_ready)begin
@@ -124,7 +151,7 @@ DDR3_Memory_Interface_Top ddr3_mem(
 		.cmd_en(cmd_en), //input cmd_en
 		.addr(addr), //input [27:0] addr
 		.wr_data_rdy(wr_data_rdy), //output wr_data_rdy
-		.wr_data({wr_data, 32'b0}), //input [63:0] wr_data
+		.wr_data({32'b0, wr_data}), //input [63:0] wr_data
 		.wr_data_en(wr_data_en), //input wr_data_en
 		.wr_data_end(wr_data_end), //input wr_data_end
 		.wr_data_mask(wr_data_mask), //input [7:0] wr_data_mask

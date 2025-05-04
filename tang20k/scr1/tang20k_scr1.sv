@@ -162,34 +162,7 @@ logic              ddr_rst_out;
 // assign LED0 = ddr_rst_out;
 assign LED3 = RESETn;
 
-ddr3_top ddr3(
-    .clk        (cpu_clk),
-    .rst_n      (RESETn),
-    .we         (ahb_dmem_hwrite),
-    .wr_data    (ahb_dmem_hwdata),
-    .addr       ({ahb_dmem_haddr[27:0]}),
-    .ddr_hsel   (ddr_hsel),
 
-    .r_data      (ddr_r_data),
-    .ddr_rdy     (rd_data_rdy_ddr),
-    .rst_out     (ddr_rst_out),
-    .ddr_addr    (ddr_addr),
-    .ddr_bank    (ddr_bank),
-    .ddr_cs      (ddr_cs),
-    .ddr_ras     (ddr_ras),
-    .ddr_cas     (ddr_cas),
-    .ddr_we      (ddr_we),
-    .ddr_ck      (ddr_ck),
-    .ddr_ck_n    (ddr_ck_n),
-    .ddr_cke     (ddr_cke),
-    .ddr_odt     (ddr_odt),
-    .ddr_reset_n (ddr_reset_n),
-    .ddr_dqm      (ddr_dm),
-    .ddr_dq      (ddr_dq),
-    .ddr_dqs     (ddr_dqs),
-    .ddr_dqs_n   (ddr_dqs_n),
-    .ddr_calib_finished(LED2)
-);
 
     assign extn_rst_in_n = RESETn;
     assign cpu_clk       = CLK;
@@ -379,6 +352,36 @@ ddr3_top ddr3(
     assign hresp            = {1'b0, 1'b0, dmem_resp, uart_hresp};
     
     
+    ddr3_top 
+    ddr3(
+        .clk        (cpu_clk),
+        .rst_n      (RESETn),
+        .we         (ahb_dmem_hwrite),
+        .wr_data    (ahb_dmem_hwdata),
+        .addr       ({ahb_dmem_haddr[27:0]}),
+        .ddr_hsel   (ddr_hsel),
+
+        .r_data      (ddr_r_data),
+        .ddr_rdy     (rd_data_rdy_ddr),
+        .rst_out     (ddr_rst_out),
+        .ddr_addr    (ddr_addr),
+        .ddr_bank    (ddr_bank),
+        .ddr_cs      (ddr_cs),
+        .ddr_ras     (ddr_ras),
+        .ddr_cas     (ddr_cas),
+        .ddr_we      (ddr_we),
+        .ddr_ck      (ddr_ck),
+        .ddr_ck_n    (ddr_ck_n),
+        .ddr_cke     (ddr_cke),
+        .ddr_odt     (ddr_odt),
+        .ddr_reset_n (ddr_reset_n),
+        .ddr_dqm      (ddr_dm),
+        .ddr_dq      (ddr_dq),
+        .ddr_dqs     (ddr_dqs),
+        .ddr_dqs_n   (ddr_dqs_n),
+        .ddr_calib_finished(LED2)
+    );
+
     ahb_lite_uart16550
     i_uart(
     .HCLK       (cpu_clk),
