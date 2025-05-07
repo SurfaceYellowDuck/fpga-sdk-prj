@@ -18,7 +18,7 @@ parameter ROM_SIZE                              = `ROM_SIZE;
 
 module tang20k_scr1 
 (   
-    input  logic                        CLK,
+    input  logic                        CLK_27MHz,
     input  logic                        RESETn,
     output logic                        LED0,
     output logic                        LED1,
@@ -44,7 +44,13 @@ module tang20k_scr1
     input  logic                        UART_RX,
     output logic                        UART_TX
 );
-    
+    logic CLK;
+        Gowin_rPLL pll(
+        .clkout(CLK), //output clkout
+        .lock(lock), //output lock
+        .reset(~RESETn), //input reset
+        .clkin(CLK_27MHz) //input clkin
+    );
     
     
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 

@@ -27,6 +27,8 @@
         <!-- <File path="./src/ddr3_memory_interface/ddr3_memory_interface.v" type="file.verilog" enable="1"/> -->
         <!-- <File path="./src/gowin_rpll/gowin_rpll.v" type="file.verilog" enable="1"/> -->
         <File path="./src/gowin_dpb/gowin_dpb.v" type="file.verilog" enable="1"/>
+        <File path="./src/gowin_rpll/gowin_rpll.v" type="file.verilog" enable="1"/>
+
 
 
 
