@@ -1,0 +1,97 @@
+GowinSynthesis start
+Running parser ...
+Analyzing Verilog file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v'
+Analyzing included file 'ahb_arb_defs.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v":16)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v":16)
+Analyzing included file 'gowin_ahb_arbiter_name.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v":17)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v":17)
+Analyzing included file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_const.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v":19)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v":19)
+Analyzing Verilog file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v'
+Analyzing included file 'ahb_arb_defs.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+Analyzing included file 'gowin_ahb_arbiter_name.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+Analyzing included file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_const.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+Analyzing Verilog file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v'
+Analyzing included file 'gowin_ahb_arbiter_name.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v":304)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v":304)
+Analyzing included file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_const.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v":304)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v":304)
+Analyzing Verilog file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v'
+Analyzing included file 'ahb_arb_defs.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v":127)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v":127)
+Analyzing included file 'gowin_ahb_arbiter_name.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v":127)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v":127)
+Analyzing included file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_const.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v":127)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v":127)
+Analyzing Verilog file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v'
+Analyzing included file 'gowin_ahb_arbiter_name.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v":270)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v":270)
+Analyzing included file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_const.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v":270)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v":270)
+Analyzing Verilog file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v'
+Analyzing included file 'ahb_arb_defs.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v":816)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v":816)
+Analyzing included file 'gowin_ahb_arbiter_name.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v":816)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v":816)
+Analyzing included file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_const.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v":816)
+Back to file 'C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v":816)
+Compiling module 'Gowin_AHB_Arbiter_Top'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\gowin_ahb_arbiter_top.v":22)
+Compiling module '**'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+Compiling module '**'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\InputStage.v":304)
+Compiling module '**'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\MatrixDecodeSx.v":127)
+Compiling module '**'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputStage16.v":816)
+Compiling module '**'("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\OutputArb16.v":270)
+NOTE  (EX0101) : Current top module is "Gowin_AHB_Arbiter_Top"
+[5%] Running netlist conversion ...
+Running device independent optimization ...
+[10%] Optimizing Phase 0 completed
+[15%] Optimizing Phase 1 completed
+[25%] Optimizing Phase 2 completed
+Running inference ...
+[30%] Inferring Phase 0 completed
+[40%] Inferring Phase 1 completed
+[50%] Inferring Phase 2 completed
+[55%] Inferring Phase 3 completed
+Running technical mapping ...
+[60%] Tech-Mapping Phase 0 completed
+[65%] Tech-Mapping Phase 1 completed
+[75%] Tech-Mapping Phase 2 completed
+[80%] Tech-Mapping Phase 3 completed
+[90%] Tech-Mapping Phase 4 completed
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage10" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage11" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage12" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage13" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage14" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage15" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage2" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage3" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage4" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage5" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage6" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage7" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage8" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~InputStage.Gowin_AHB_Arbiter_Top" instantiated to "uInputStage9" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS0" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS1" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS10" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS11" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS12" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS13" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS14" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS15" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS2" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS3" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS4" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS5" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS6" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS7" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS8" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+WARN  (NL0002) : The module "~MatrixDecodeSx.Gowin_AHB_Arbiter_Top" instantiated to "uMatrixDecodeS9" is swept in optimizing("C:\9_11_01\Gowin\Gowin_V1.9.11.01_x64\IDE\ipcore\AHBBusArbiter\data\BusMatrix16.v":1386)
+[95%] Generate netlist file "\\mac\Home\Desktop\tst\fpga-sdk-prj\tang20k\scr1\src\gowin_ahb_arbiter\temp\ahb_bus_arbiter\gowin_ahb_arbiter.vg" completed
+Generate template file "\\mac\Home\Desktop\tst\fpga-sdk-prj\tang20k\scr1\src\gowin_ahb_arbiter\temp\ahb_bus_arbiter\gowin_ahb_arbiter_tmp.v" completed
+[100%] Generate report file "\\mac\Home\Desktop\tst\fpga-sdk-prj\tang20k\scr1\src\gowin_ahb_arbiter\temp\ahb_bus_arbiter\gowin_ahb_arbiter_syn.rpt.html" completed
+GowinSynthesis finish

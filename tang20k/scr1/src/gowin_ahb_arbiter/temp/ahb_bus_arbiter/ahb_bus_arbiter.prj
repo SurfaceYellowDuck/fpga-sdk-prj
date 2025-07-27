@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gowin-synthesis-project>
+<Project>
+    <Version>beta</Version>
+    <Device id="GW2A-18C" package="PBGA256" speed="8" partNumber="GW2A-LV18PG256C8/I7"/>
+    <FileList>
+        <File path="C:/9_11_01/Gowin/Gowin_V1.9.11.01_x64/IDE/ipcore/AHBBusArbiter/data/gowin_ahb_arbiter_top.v" type="verilog"/>
+        <File path="C:/9_11_01/Gowin/Gowin_V1.9.11.01_x64/IDE/ipcore/AHBBusArbiter/data/BusMatrix16.v" type="verilog"/>
+        <File path="C:/9_11_01/Gowin/Gowin_V1.9.11.01_x64/IDE/ipcore/AHBBusArbiter/data/InputStage.v" type="verilog"/>
+        <File path="C:/9_11_01/Gowin/Gowin_V1.9.11.01_x64/IDE/ipcore/AHBBusArbiter/data/MatrixDecodeSx.v" type="verilog"/>
+        <File path="C:/9_11_01/Gowin/Gowin_V1.9.11.01_x64/IDE/ipcore/AHBBusArbiter/data/OutputArb16.v" type="verilog"/>
+        <File path="C:/9_11_01/Gowin/Gowin_V1.9.11.01_x64/IDE/ipcore/AHBBusArbiter/data/OutputStage16.v" type="verilog"/>
+    </FileList>
+    <OptionList>
+        <Option type="disable_insert_pad" value="1"/>
+        <Option type="include_path" value="C:/9_11_01/Gowin/Gowin_V1.9.11.01_x64/IDE/ipcore/AHBBusArbiter/data"/>
+        <Option type="include_path" value="//mac/Home/Desktop/tst/fpga-sdk-prj/tang20k/scr1/src/gowin_ahb_arbiter/temp/ahb_bus_arbiter"/>
+        <Option type="output_file" value="gowin_ahb_arbiter.vg"/>
+        <Option type="output_template" value="gowin_ahb_arbiter_tmp.v"/>
+        <Option type="ram_balance" value="1"/>
+        <Option type="ram_rw_check" value="1"/>
+        <Option type="top_module" value="Gowin_AHB_Arbiter_Top"/>
+        <Option type="vcc" value="1.0"/>
+        <Option type="vccx" value="3.3"/>
+        <Option type="verilog_language" value="sysv-2017"/>
+    </OptionList>
+</Project>

@@ -1,6 +1,6 @@
 parameter DRAM_TYPE = "DDR3";
 parameter nCK_PER_CLK = 4;
-parameter tCK = 9259;
+parameter tCK = 5000;
 parameter REG_CTRL = "OFF";
 parameter DQ_WIDTH = 8;
 parameter DRAM_WIDTH = 8;

@@ -13,7 +13,8 @@
 parameter bit [31:0] FPGA_PRIMER20K_SOC_ID      = `SCR1_PTFM_SOC_ID;
 parameter bit [31:0] FPGA_PRIMER20K_BLD_ID      = `SCR1_PTFM_BLD_ID;
 parameter bit [31:0] FPGA_TANG20K_CORE_CLK_FREQ = `SCR1_PTFM_CORE_CLK_FREQ;
-parameter SLAVE_DEVISES_CNT                     = `SLAVE_DEVISES_CNT;
+parameter SLAVE_DMEM_DEVISES_CNT                = `SLAVE_DMEM_DEVISES_CNT;
+parameter SLAVE_IMEM_DEVISES_CNT                = `SLAVE_IMEM_DEVISES_CNT;
 parameter ROM_SIZE                              = `ROM_SIZE;
 
 module tang20k_scr1 
@@ -116,10 +117,16 @@ logic              ddr_rst_out;
     logic                               scr1_irq;
     `endif // SCR1_IPIC_EN
     
-    wire  [`SLAVE_DEVISES_CNT-1:0]      hreadyout;
-    wire  [`SLAVE_DEVISES_CNT-1:0]      hresp;
-    wire  [`SLAVE_DEVISES_CNT-1:0]      hsel_;
-    wire                                imem_hsel;
+    wire  [`SLAVE_DMEM_DEVISES_CNT-1:0] hreadyout;
+    wire  [`SLAVE_DMEM_DEVISES_CNT-1:0] resp;
+    wire  [`SLAVE_DMEM_DEVISES_CNT-1:0] hsel_;
+
+    wire  [`SLAVE_IMEM_DEVISES_CNT-1:0] ihreadyout;
+    wire  [`SLAVE_IMEM_DEVISES_CNT-1:0] imem_hsel;
+
+    logic [SCR1_AHB_WIDTH-1:0]          irdata_rom;
+    logic [SCR1_AHB_WIDTH-1:0]          irdata_ddr;
+
     logic [SCR1_AHB_WIDTH-1:0]          hrdata_0;
     logic [SCR1_AHB_WIDTH-1:0]          hrdata_1;
     
@@ -150,7 +157,9 @@ logic              ddr_rst_out;
     logic [31:0]                        core_frq = FPGA_TANG20K_CORE_CLK_FREQ;
     logic                               ahb_core_frq_sel;
     
-    logic                               ddr_hsel;
+    logic                               ddr_dmem_hsel;
+    logic                               ddr_imem_hsel;
+
     
     // ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  ==  = 
     //  Resets
@@ -166,7 +175,7 @@ assign LED3 = RESETn;
 
     assign extn_rst_in_n = RESETn;
     assign cpu_clk       = CLK;
-    assign pwrup_rst_n   = RESETn && ddr_rst_out;
+    assign pwrup_rst_n   = RESETn;
     
     always_ff @(posedge cpu_clk, negedge pwrup_rst_n)
     begin
@@ -341,29 +350,58 @@ assign LED3 = RESETn;
     assign LED4             =  1'b0;
     
     
-    assign ddr_hsel         = ahb_dmem_haddr[31:28] == 4'b1000;
+    assign ddr_dmem_hsel         = ahb_dmem_haddr[31:28] == 4'b1000;
+    assign ddr_imem_hsel         = ahb_imem_haddr[31:28] == 4'b1000;
+
+
     assign ahb_core_frq_sel = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0000; //frq register
     assign uart_hsel        = ahb_dmem_haddr[31:16] == 16'b1111_1111_0000_0001;  //uart
     assign dmem_hsel        = ahb_dmem_haddr[31:16] == 16'b1111_1111_1111_1111;   //rom
-    assign imem_hsel        = ahb_imem_haddr[31:16] == 16'b1111_1111_1111_1111;
     
-    assign hsel_            = {ddr_hsel, ahb_core_frq_sel, dmem_hsel, uart_hsel};
-    assign hreadyout        = {rd_data_rdy_ddr, 1'b1, dmem_ready, uart_hready};
-    assign hresp            = {1'b0, 1'b0, dmem_resp, uart_hresp};
+    assign r_imem_hsel        = ahb_imem_haddr[31:16] == 16'b1111_1111_1111_1111;
     
+    assign hsel_            = {ddr_dmem_hsel, ahb_core_frq_sel, dmem_hsel, uart_hsel};
+    assign imem_hsel        = {ddr_imem_hsel, r_imem_hsel};
+    // assign
+
+logic           ddr_ready;
+logic [31:0]    ddr_haddr;
+logic [1:0]     ddr_htrans;
+logic           ddr_hwrite;
+logic [2:0]     ddr_hsize;
+logic [31:0]    ddr_data;
+logic           ddr_ready_out;
+logic [3:0]     ddr_master_out;
+logic           ddr_hsel;
+logic [31:0]    ddr_imem_rdata;
+logic [31:0]    ddr_dmem_rdata;
+logic           ddr_imem_ready;
+logic           ddr_dmem_ready;
+
+
+
+logic irom_ready;
+logic irom_resp;
+
+assign ihreadyout      = {ddr_imem_ready , rom_ready};
+assign ihresp          = {1'b0, 1'b0};
+assign hreadyout       = {ddr_dmem_ready, 1'b1, dmem_ready, uart_hready};
+assign resp            = {1'b0, 1'b0, dmem_resp, uart_hresp};
     
-    ddr3_top 
-    ddr3(
+    // logic [31:0] arb_instr_out;
+
+ddr3_top ddr3(
         .clk        (cpu_clk),
         .rst_n      (RESETn),
-        .we         (ahb_dmem_hwrite),
-        .wr_data    (ahb_dmem_hwdata),
-        .addr       ({ahb_dmem_haddr[27:0]}),
+        .we         (ddr_hwrite),
+        .wr_data    (ddr_data),
+        .addr       ({ddr_haddr[27:0]}),
         .ddr_hsel   (ddr_hsel),
 
         .r_data      (ddr_r_data),
         .ddr_rdy     (rd_data_rdy_ddr),
         .rst_out     (ddr_rst_out),
+        
         .ddr_addr    (ddr_addr),
         .ddr_bank    (ddr_bank),
         .ddr_cs      (ddr_cs),
@@ -380,7 +418,7 @@ assign LED3 = RESETn;
         .ddr_dqs     (ddr_dqs),
         .ddr_dqs_n   (ddr_dqs_n),
         .ddr_calib_finished(LED2)
-    );
+);
 
     ahb_lite_uart16550
     i_uart(
@@ -422,11 +460,11 @@ assign LED3 = RESETn;
     
     .imem_addr      (ahb_imem_haddr[$clog2(ROM_SIZE)+1:2]),
     .imem_trans     (ahb_imem_htrans),
-    .imem_hsel      (imem_hsel),
+    .imem_hsel      (r_imem_hsel),
     
-    .imem_ready     (ahb_imem_hready),
-    .imem_resp      (ahb_imem_hresp),
-    .imem_data      (ahb_imem_hrdata),
+    .imem_ready     (rom_ready),
+    .imem_resp      (),
+    .imem_data      (irdata_rom),
     
     .dmem_addr      (ahb_dmem_haddr[$clog2(ROM_SIZE)+1:2]),
     .dmem_trans     (ahb_dmem_htrans),
@@ -436,21 +474,89 @@ assign LED3 = RESETn;
     .dmem_data      (hrdata_1)
     );
     
+// by idea arbiter have to keep addr untill it get responce from device
+Gowin_AHB_Arbiter_Top ahb_arbiter(
+		.HCLK           (cpu_clk), //input HCLK
+		.HRESETn        (soc_rst_n), //input HRESETn
+
+		.MHSELS0        (ddr_dmem_hsel), //input MHSELS0
+		.MHADDRS0       (ahb_dmem_haddr), //input [31:0] MHADDRS0
+		.MHTRANSS0      (ahb_dmem_htrans), //input [1:0] MHTRANSS0
+		.MHWRITES0      (ahb_dmem_hwrite), //input MHWRITES0
+		.MHSIZES0       (ahb_dmem_hsize), //input [2:0] MHSIZES0
+		.MHBURSTS0      (ahb_dmem_hburst), //input [2:0] MHBURSTS0
+		.MHPROTS0       (ahb_dmem_hprot), //input [3:0] MHPROTS0
+		.MHMASTERS0     (4'b0001), //input [3:0] MHMASTERS0
+		.MHWDATAS0      (ahb_dmem_hwdata), //input [31:0] MHWDATAS0
+		.MHMASTLOCKS0   (), //input MHMASTLOCKS0
+		.MHREADYS0      (1'b1), //input MHREADYS0
+		.MHRDATAS0      (ddr_dmem_rdata), //output [31:0] MHRDATAS0
+		.MHREADYOUTS0   (ddr_dmem_ready), //output MHREADYOUTS0
+		.MHRESPS0       (), //output [1:0] MHRESPS0
+
+		.MHSELS1        (ddr_imem_hsel), //input MHSELS1
+		.MHADDRS1       (ahb_imem_haddr), //input [31:0] MHADDRS1
+		.MHTRANSS1      (ahb_imem_htrans), //input [1:0] MHTRANSS1
+		.MHWRITES1      (1'b0), //input MHWRITES1
+		.MHSIZES1       (ahb_imem_hsize), //input [2:0] MHSIZES1
+		.MHBURSTS1      (ahb_imem_hburst), //input [2:0] MHBURSTS1
+		.MHPROTS1       (ahb_imem_hprot), //input [3:0] MHPROTS1
+		.MHMASTERS1     (4'b0010), //input [3:0] MHMASTERS1
+		.MHWDATAS1      (), //input [31:0] MHWDATAS1
+		.MHMASTLOCKS1   (), //input MHMASTLOCKS1
+		.MHREADYS1      (1'b1), //input MHREADYS1
+		.MHRDATAS1      (ddr_imem_rdata), //output [31:0] MHRDATAS1
+		.MHREADYOUTS1   (ddr_imem_ready), //output MHREADYOUTS1
+		.MHRESPS1       (), //output [1:0] MHRESPS1
+
+		.SHRDATAM0      (ddr_r_data), //input [31:0] SHRDATAM0
+		.SHREADYOUTM0   (rd_data_rdy_ddr), //input SHREADYOUTM0
+		.SHRESPM0       (1'b0), //input [1:0] SHRESPM0
+		.SHSELM0        (ddr_hsel), //output SHSELM0
+		.SHADDRM0       (ddr_haddr), //output [31:0] SHADDRM0
+		.SHTRANSM0      (ddr_htrans), //output [1:0] SHTRANSM0
+		.SHWRITEM0      (ddr_hwrite), //output SHWRITEM0
+		.SHSIZEM0       (), //output [2:0] SHSIZEM0
+		.SHBURSTM0      (), //output [2:0] SHBURSTM0
+		.SHPROTM0       (), //output [3:0] SHPROTM0
+		.SHMASTERM0     (ddr_master_out), //output [3:0] SHMASTERM0
+		.SHWDATAM0      (ddr_data), //output [31:0] SHWDATAM0
+		.SHMASTLOCKM0   (), //output SHMASTLOCKM0
+		.SHREADYMUXM0   (ddr_ready_out) //output SHREADYMUXM0
+);
+
+//mux need only for reading operations
 ahb_slave_mux
     soc_ahb_slave_mux(
     .clk        (cpu_clk),
     .rst_n      (soc_rst_n),
     .htrans     (ahb_dmem_htrans),
-    .hsel_s     (hsel_),
+    .ihtrans    (ahb_imem_htrans),
+    
+    .dhsel_s    (hsel_),
+    .ihsel_s    (imem_hsel),
+    // data
     .rdata_0    (hrdata_0),
     .rdata_1    (hrdata_1),
     .rdata_2    (core_frq),
-    .rdata_3    (ddr_r_data),
-    .resp       (hresp),
+    .rdata_3    (ddr_dmem_rdata),
+    // instruction data
+    .irdata_rom (irdata_rom),
+    .irdata_ddr (ddr_imem_rdata),
+
+    
+    .resp       (resp),
+    .iresp      (ihresp),
+
     .readyout   (hreadyout),
+    .ireadyout  (ihreadyout),
     
     .hrdata     (ahb_dmem_hrdata),
     .hresp      (ahb_dmem_hresp),
-    .hready     (ahb_dmem_hready)
+    .hready     (ahb_dmem_hready),
+
+    .ihrdata     (ahb_imem_hrdata),
+    .ihresp      (ahb_imem_hresp),
+    .ihready     (ahb_imem_hready)
 );
     endmodule: tang20k_scr1

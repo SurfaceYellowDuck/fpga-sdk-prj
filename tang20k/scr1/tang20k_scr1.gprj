@@ -24,10 +24,22 @@
         <File path="./ip/ahb_lite_uart16550/src/uart16550/uart_transmitter.v" type="file.verilog" enable="1"/>
         
         <File path="./ip/ddr3_top/ddr3_top.sv" type="file.verilog" enable="1"/>
+        
+        <File path="./ip/async_fifo/src/async_fifo.v" type="file.verilog" enable="1"/>
+        <File path="./ip/async_fifo/src/fifo_mem.v" type="file.verilog" enable="1"/>
+        <File path="./ip/async_fifo/src/gray_sync2d.v" type="file.verilog" enable="1"/>
+        <File path="./ip/async_fifo/src/rptr_empty.v" type="file.verilog" enable="1"/>
+        <File path="./ip/async_fifo/src/wptr_full.v" type="file.verilog" enable="1"/>
+
+        <File path="./ip/sync/Handshake_syn.v" type="file.verilog" enable="1"/>
+        <File path="./ip/sync/NDFF_syn.v" type="file.verilog" enable="1"/>
+
 
         <File path="./src/ddr3_memory_interface/ddr3_memory_interface.v" type="file.verilog" enable="1"/>
         <File path="./src/gowin_rpll/gowin_rpll.v" type="file.verilog" enable="1"/>
         <File path="./src/gowin_dpb/gowin_dpb.v" type="file.verilog" enable="1"/>
+        <File path="./src/gowin_ahb_arbiter/gowin_ahb_arbiter.v" type="file.verilog" enable="1"/>
+
 
 
 
